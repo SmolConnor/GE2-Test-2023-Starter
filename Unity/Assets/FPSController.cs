@@ -29,6 +29,7 @@ public class FPSController : MonoBehaviour
         if(other.CompareTag("Bullet"))
         {
             inPod = true;
+            
         }
     }
 
@@ -81,6 +82,15 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Z))
+        {
+            inPod = false;
+        }
+        if (inPod == true)
+        {
+            transform.forward = pod.transform.forward;
+            transform.position = pod.transform.position;
+        }
         if (inPod == false)
         {
             //Cursor.lockState = CursorLockMode.Confined;
