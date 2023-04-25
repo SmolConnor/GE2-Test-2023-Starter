@@ -10,6 +10,9 @@ public class FPSController : MonoBehaviour
     public float lookSpeed = 150.0f;
     public bool inPod = false;
     public GameObject pod;
+    public float smmmm = 10;
+    private float startTime;
+    private float smovement;
 
     public bool allowPitch = true;
 
@@ -29,7 +32,12 @@ public class FPSController : MonoBehaviour
         if(other.CompareTag("Bullet"))
         {
             inPod = true;
-            
+            smmmm = Vector3.Distance(transform.position, pod.transform.position);
+            startTime = Time.time;
+            float distCovered = (Time.time - startTime) * 1;
+            smovement = distCovered / smmmm;
+            transform.position = Vector3.Slerp(transform.position, pod.transform.position, smovement);
+            transform.forward = Vector3.Slerp(transform.forward, pod.transform.forward, smovement);
         }
     }
 
@@ -85,10 +93,13 @@ public class FPSController : MonoBehaviour
         if (Input.GetKey(KeyCode.Z))
         {
             inPod = false;
+
         }
         if (inPod == true)
         {
             transform.forward = pod.transform.forward;
+            
+            
             transform.position = pod.transform.position;
         }
         if (inPod == false)
