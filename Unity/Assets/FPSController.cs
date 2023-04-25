@@ -8,6 +8,8 @@ public class FPSController : MonoBehaviour
     public GameObject mainCamera;
     public float speed = 50.0f;
     public float lookSpeed = 150.0f;
+    public bool inPod = false;
+    public GameObject pod;
 
     public bool allowPitch = true;
 
@@ -71,58 +73,60 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Cursor.lockState = CursorLockMode.Confined;
-  
-        float mouseX, mouseY;
-        float speed = this.speed;
-
-        invcosTheta1 = Vector3.Dot(transform.forward, Vector3.up);
-
-        float runAxis = 0; // Input.GetAxis("Run Axis");
-
-        if (Input.GetKey(KeyCode.Escape))
+        if (inPod == false)
         {
-            Application.Quit();
-        }
+            //Cursor.lockState = CursorLockMode.Confined;
 
-        if (Input.GetKey(KeyCode.LeftShift) || runAxis != 0)
-        {
-            speed *= 5.0f;
-        }
-            
-        if (Input.GetKey(KeyCode.E))
-        {
-            Fly(Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.F))
-        {
-            Fly(-Time.deltaTime * speed);
-        }
+            float mouseX, mouseY;
+            float speed = this.speed;
 
-        if (Input.GetKey(KeyCode.Joystick1Button5))
-        {
-            Fly(speed * Time.deltaTime);
+            invcosTheta1 = Vector3.Dot(transform.forward, Vector3.up);
+
+            float runAxis = 0; // Input.GetAxis("Run Axis");
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift) || runAxis != 0)
+            {
+                speed *= 5.0f;
+            }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                Fly(Time.deltaTime * speed);
+            }
+            if (Input.GetKey(KeyCode.F))
+            {
+                Fly(-Time.deltaTime * speed);
+            }
+
+            if (Input.GetKey(KeyCode.Joystick1Button5))
+            {
+                Fly(speed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.Joystick1Button4))
+            {
+                Fly(-speed * Time.deltaTime);
+            }
+
+            mouseX = Input.GetAxis("Mouse X");
+            mouseY = Input.GetAxis("Mouse Y");
+
+
+            Yaw(mouseX * lookSpeed * Time.deltaTime);
+            if (allowPitch)
+            {
+                Pitch(-mouseY * lookSpeed * Time.deltaTime);
+            }
+
+            float contWalk = Input.GetAxis("Vertical");
+            float contStrafe = Input.GetAxis("Horizontal");
+            Walk(contWalk * speed * Time.deltaTime);
+            Strafe(contStrafe * speed * Time.deltaTime);
         }
-
-        if (Input.GetKey(KeyCode.Joystick1Button4))
-        {
-            Fly(-speed * Time.deltaTime);
-        }
-
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
-            
-
-        Yaw(mouseX * lookSpeed * Time.deltaTime);
-        if (allowPitch)
-        {
-            Pitch(-mouseY * lookSpeed * Time.deltaTime);
-        }
-
-        float contWalk = Input.GetAxis("Vertical");
-        float contStrafe = Input.GetAxis("Horizontal");
-        Walk(contWalk * speed * Time.deltaTime);
-        Strafe(contStrafe * speed * Time.deltaTime);
     }
 }
