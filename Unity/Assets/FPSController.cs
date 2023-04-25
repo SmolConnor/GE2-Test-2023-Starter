@@ -102,7 +102,10 @@ public class FPSController : MonoBehaviour
 
             boid.enabled = false;
             transform.position = pod.transform.position;
-            
+            Vector3 forward = mainCamera.transform.forward;
+            forward.Normalize();
+            boid.transform.position += forward * 0.01f;
+
         }
         if (inPod == false)
         {
