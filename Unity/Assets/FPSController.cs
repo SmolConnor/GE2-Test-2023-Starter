@@ -13,6 +13,7 @@ public class FPSController : MonoBehaviour
     public float smmmm = 10;
     private float startTime;
     private float smovement;
+    public Boid boid;
 
     public bool allowPitch = true;
 
@@ -98,12 +99,17 @@ public class FPSController : MonoBehaviour
         if (inPod == true)
         {
             transform.forward = pod.transform.forward;
-            
-            
+
+            boid.enabled = false;
             transform.position = pod.transform.position;
+            
         }
         if (inPod == false)
         {
+
+            boid.enabled = true;
+
+
             //Cursor.lockState = CursorLockMode.Confined;
 
             float mouseX, mouseY;
