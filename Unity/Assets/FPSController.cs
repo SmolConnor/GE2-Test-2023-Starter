@@ -105,6 +105,9 @@ public class FPSController : MonoBehaviour
             Vector3 forward = mainCamera.transform.forward;
             forward.Normalize();
             boid.transform.position += forward * 0.01f;
+            float contWalk = Input.GetAxis("Vertical");
+            float contStrafe = Input.GetAxis("Horizontal");
+            boid.transform.Rotate(contWalk * speed * Time.deltaTime, contStrafe * speed * Time.deltaTime, 0);
 
         }
         if (inPod == false)
